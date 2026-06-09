@@ -47,6 +47,13 @@
             <audio id="noAudio" preload="auto" src="image/obsession-no.mp3"></audio>
             <audio id="yesAudio" preload="auto" src="image/yes-cheer.mp3"></audio>
         </div>
+
+        <div id="ans" class="container">
+            <h1 class="header_text success_text">Vidimo se večeras u 20:30!</h1>
+            <div class="gif_container">
+                <img src="image/ans.gif" alt="Slatka animirana ilustracija">
+            </div>
+        </div>
     </body>
     <script>
         var NOTIFY_EMAIL = 'poslovninalog1405@gmail.com';
@@ -104,6 +111,9 @@
             yesBtn.disabled = true;
             playYesAudio();
             sendMail('da');
+
+            document.getElementById('ask').style.display = 'none';
+            document.getElementById('ans').style.display = 'block';
         }
 
         function placeNoButton() {

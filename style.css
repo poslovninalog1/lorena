@@ -11,6 +11,17 @@ audio {
     display: none;
 }
 
+#ans {
+    display: none;
+}
+
+.success_text {
+    font-size: clamp(32px, 6vw, 50px);
+    line-height: 1.2;
+    padding: 0 20px;
+    color: #FFB6C1;
+}
+
 #noButton {
     position: absolute;
     margin-left: 150px;
