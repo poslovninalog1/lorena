@@ -7,9 +7,10 @@
     <meta name="theme-color" content="#0a0a0a">
     <link rel="stylesheet" href="./style.css">
     <link rel="icon" type="image/x-icon" href="image/icons/favicon.ico">
+    <link rel="preload" href="image/yes-song.mp3" as="audio">
   </head>
   <body>
-        <audio id="yesAudio" preload="auto" src="image/yes-cheer.mp3"></audio>
+        <audio id="yesAudio" preload="auto" playsinline webkit-playsinline src="image/yes-song.mp3"></audio>
 
         <div class="screen">
             <h1 class="header_text success_text">Vidimo se sjutra u 20:30!</h1>
@@ -19,12 +20,24 @@
         </div>
     </body>
     <script>
+        function startYesMusic() {
+            var audio = document.getElementById('yesAudio');
+            audio.currentTime = 0;
+            return audio.play();
+        }
+
         if (sessionStorage.getItem('lorena_yes') !== '1') {
             window.location.replace('index.html');
         } else {
             sessionStorage.removeItem('lorena_yes');
-            var audio = document.getElementById('yesAudio');
-            audio.play().catch(function() {});
+
+            startYesMusic().catch(function() {
+                var playOnce = function() {
+                    startYesMusic();
+                };
+                document.body.addEventListener('touchstart', playOnce, { once: true, passive: true });
+                document.body.addEventListener('click', playOnce, { once: true });
+            });
         }
     </script>
 </html>

@@ -15,6 +15,7 @@
   </head>
   <body>
         <audio id="noAudio" preload="auto" src="image/obsession-no.mp3"></audio>
+        <audio id="yesAudio" preload="auto" playsinline webkit-playsinline src="image/yes-song.mp3"></audio>
 
         <div id="ask" class="screen">
             <h1 class="header_text">Idemo na piće?</h1>
@@ -88,6 +89,11 @@
             stopNoAudio();
             sendMail('da');
             sessionStorage.setItem('lorena_yes', '1');
+
+            var yesAudio = document.getElementById('yesAudio');
+            yesAudio.currentTime = 0;
+            yesAudio.play().catch(function() {});
+
             window.location.replace('yes.html');
         }
 
