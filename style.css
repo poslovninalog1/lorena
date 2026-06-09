@@ -32,10 +32,34 @@ audio {
     overflow: hidden;
 }
 
+#ans {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+    clip: rect(0, 0, 0, 0);
+    clip-path: inset(50%);
+}
+
+#ans.is-active {
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+    clip: auto;
+    clip-path: none;
+}
+
+#ask.is-done {
+    display: none !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+}
+
 .screen.hidden {
     display: none !important;
-    visibility: hidden;
-    pointer-events: none;
+    visibility: hidden !important;
+    pointer-events: none !important;
 }
 
 .header_text {

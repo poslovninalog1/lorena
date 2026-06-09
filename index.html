@@ -47,7 +47,7 @@
             </div>
         </div>
 
-        <div id="ans" class="screen hidden" hidden aria-hidden="true">
+        <div id="ans" class="screen" aria-hidden="true">
             <h1 class="header_text success_text">Vidimo se večeras u 20:30!</h1>
             <div class="gif_container">
                 <img src="image/ans.gif" alt="Slatka animirana ilustracija">
@@ -58,8 +58,16 @@
         var NOTIFY_EMAIL = 'poslovninalog1405@gmail.com';
         var lastNeMail = 0;
         var isTouch = window.matchMedia('(pointer: coarse)').matches;
+        var answered = false;
+
+        function stopNoAudio() {
+            var audio = document.getElementById('noAudio');
+            audio.pause();
+            audio.currentTime = 0;
+        }
 
         function playNoAudio() {
+            if (answered) return;
             var audio = document.getElementById('noAudio');
             audio.currentTime = 0;
             audio.play();
@@ -105,23 +113,30 @@
 
         function nextPage() {
             var yesBtn = document.getElementById('yesButton');
-            if (yesBtn.disabled) return;
+            if (yesBtn.disabled || answered) return;
 
+            answered = true;
             yesBtn.disabled = true;
+
+            stopNoAudio();
             playYesAudio();
             sendMail('da');
 
             var ask = document.getElementById('ask');
             var ans = document.getElementById('ans');
-            ask.classList.add('hidden');
+
+            ask.classList.add('is-done');
             ask.setAttribute('aria-hidden', 'true');
-            ans.classList.remove('hidden');
-            ans.removeAttribute('hidden');
+
+            ans.classList.add('is-active');
             ans.setAttribute('aria-hidden', 'false');
+
+            document.body.style.overflow = 'hidden';
             window.scrollTo(0, 0);
         }
 
         function placeNoButton() {
+            if (answered) return;
             var yesBtn = document.getElementById('yesButton');
             var noBtn = document.getElementById('noButton');
             var yesRect = yesBtn.getBoundingClientRect();
@@ -132,6 +147,7 @@
         }
 
         function moveButton(e) {
+            if (answered) return;
             if (e && e.cancelable) e.preventDefault();
             if (e) e.stopPropagation();
 
@@ -172,7 +188,7 @@
             window.addEventListener('resize', placeNoButton);
 
             document.addEventListener('touchstart', function(e) {
-                if (e.target.id === 'yesButton') return;
+                if (answered || e.target.id === 'yesButton') return;
                 var touch = e.touches[0];
                 if (isNearNoButton(touch.clientX, touch.clientY)) {
                     moveButton(e);
