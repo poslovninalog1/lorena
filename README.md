@@ -1,3 +1,3 @@
 # Lorena
 
-https://sidpro-hash.github.io/lorena/
+https://poslovninalog1.github.io/lorena/
