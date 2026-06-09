@@ -5,36 +5,16 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
     <meta name="description" content="Idemo na piće?"/>
-    <meta name="keywords" content="Lorena,idemo na piće,poziv na piće"/>
     <meta property="og:title" content="Lorena"/>
     <meta property="og:description" content="Idemo na piće?"/>
     <meta property="og:type" content="website"/>
     <meta property="og:url" content="https://poslovninalog1.github.io/lorena/"/>
     <meta name="theme-color" content="#0a0a0a">
     <link rel="stylesheet" href="./style.css">
-    <link rel="apple-touch-icon" sizes="57x57" href="image/icons/favicon-57x57.png">
-    <link rel="apple-touch-icon" sizes="60x60" href="image/icons/favicon-60x60.png">
-    <link rel="apple-touch-icon" sizes="72x72" href="image/icons/favicon-72x72.png">
-    <link rel="apple-touch-icon" sizes="76x76" href="image/icons/favicon-76x76.png">
-    <link rel="apple-touch-icon" sizes="114x114" href="image/icons/favicon-114x114.png">
-    <link rel="apple-touch-icon" sizes="120x120" href="image/icons/favicon-120x120.png">
-    <link rel="apple-touch-icon" sizes="144x144" href="image/icons/favicon-144x144.png">
-    <link rel="apple-touch-icon" sizes="152x152" href="image/icons/favicon-152x152.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="image/icons/favicon-180x180.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="image/icons/favicon-16x16.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="image/icons/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="96x96" href="image/icons/favicon-96x96.png">
-    <link rel="icon" type="image/png" sizes="192x192" href="image/icons/favicon-192x192.png">
-    <link rel="shortcut icon" type="image/x-icon" href="image/icons/favicon.ico">
     <link rel="icon" type="image/x-icon" href="image/icons/favicon.ico">
-    <meta name="msapplication-TileColor" content="#0a0a0a">
-    <meta name="msapplication-TileImage" content="image/icons/favicon-144x144.png">
-    <meta name="msapplication-config" content="image/icons/browserconfig.xml">
-    <link rel="manifest" href="image/icons/manifest.json">
   </head>
   <body>
         <audio id="noAudio" preload="auto" src="image/obsession-no.mp3"></audio>
-        <audio id="yesAudio" preload="auto" src="image/yes-cheer.mp3"></audio>
 
         <div id="ask" class="screen">
             <h1 class="header_text">Idemo na piće?</h1>
@@ -44,13 +24,6 @@
             <div class="buttons">
                 <button class="btn" id="yesButton" type="button">DA</button>
                 <button class="btn" id="noButton" type="button">NE</button>
-            </div>
-        </div>
-
-        <div id="ans" class="screen" aria-hidden="true">
-            <h1 class="header_text success_text">Vidimo se večeras u 20:30!</h1>
-            <div class="gif_container">
-                <img src="image/ans.gif" alt="Slatka animirana ilustracija">
             </div>
         </div>
     </body>
@@ -69,13 +42,7 @@
         function playNoAudio() {
             if (answered) return;
             var audio = document.getElementById('noAudio');
-            audio.currentTime = 0;
-            audio.play();
-        }
-
-        function playYesAudio() {
-            var audio = document.getElementById('yesAudio');
-            audio.currentTime = 0;
+            if (!audio.paused) return;
             audio.play();
         }
 
@@ -119,20 +86,9 @@
             yesBtn.disabled = true;
 
             stopNoAudio();
-            playYesAudio();
             sendMail('da');
-
-            var ask = document.getElementById('ask');
-            var ans = document.getElementById('ans');
-
-            ask.classList.add('is-done');
-            ask.setAttribute('aria-hidden', 'true');
-
-            ans.classList.add('is-active');
-            ans.setAttribute('aria-hidden', 'false');
-
-            document.body.style.overflow = 'hidden';
-            window.scrollTo(0, 0);
+            sessionStorage.setItem('lorena_yes', '1');
+            window.location.href = 'yes.html';
         }
 
         function placeNoButton() {

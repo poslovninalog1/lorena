@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="sr" dir="ltr">
+  <head>
+    <title>Lorena</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+    <meta name="theme-color" content="#0a0a0a">
+    <link rel="stylesheet" href="./style.css">
+    <link rel="icon" type="image/x-icon" href="image/icons/favicon.ico">
+  </head>
+  <body>
+        <audio id="yesAudio" preload="auto" src="image/yes-cheer.mp3"></audio>
+
+        <div class="screen">
+            <h1 class="header_text success_text">Vidimo se večeras u 20:30!</h1>
+            <div class="gif_container">
+                <img src="image/ans.gif" alt="Slatka animirana ilustracija">
+            </div>
+        </div>
+    </body>
+    <script>
+        if (sessionStorage.getItem('lorena_yes') !== '1') {
+            window.location.replace('index.html');
+        } else {
+            var audio = document.getElementById('yesAudio');
+            audio.play().catch(function() {});
+        }
+    </script>
+</html>
