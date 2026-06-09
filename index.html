@@ -10,6 +10,7 @@
     <meta property="og:description" content="Idemo na piće?"/>
     <meta property="og:type" content="website"/>
     <meta property="og:url" content="https://poslovninalog1.github.io/lorena/"/>
+    <meta name="theme-color" content="#0a0a0a">
     <link rel="stylesheet" href="./style.css">
     <link rel="apple-touch-icon" sizes="57x57" href="image/icons/favicon-57x57.png">
     <link rel="apple-touch-icon" sizes="60x60" href="image/icons/favicon-60x60.png">
@@ -26,44 +27,64 @@
     <link rel="icon" type="image/png" sizes="192x192" href="image/icons/favicon-192x192.png">
     <link rel="shortcut icon" type="image/x-icon" href="image/icons/favicon.ico">
     <link rel="icon" type="image/x-icon" href="image/icons/favicon.ico">
-    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileColor" content="#0a0a0a">
     <meta name="msapplication-TileImage" content="image/icons/favicon-144x144.png">
     <meta name="msapplication-config" content="image/icons/browserconfig.xml">
     <link rel="manifest" href="image/icons/manifest.json">
   </head>
   <body>
         <div id="ask" class="container">
-            <div >
-                <h1 class = "header_text">Idemo na piće?</h1>
-            </div>
+            <p class="subtitle">♪ ♫</p>
+            <h1 class="header_text">Idemo na piće?</h1>
             <div class="gif_container">
-                <img src="image/ask.gif" alt="Slatka animirana ilustracija">
+                <img src="image/ask.gif" alt="Animacija">
             </div>
-            <div class = "buttons">
-                <button class="btn" id = "yesButton" onclick="nextPage()">DA</button>
-                <button class="btn" id="noButton" onmouseover="moveButton()" onclick="moveButton()">NE</button>
+            <div class="note-divider">♪ ♫ ♪</div>
+            <div class="buttons">
+                <button class="btn" id="yesButton" onclick="nextPage()">DA</button>
+                <button class="btn btn-outline" id="noButton" onmouseover="moveButton()" onclick="moveButton()">NE</button>
             </div>
             <video id="novideo" width="0" height="0" controls>
-                <source src="image/SadMoment.mp4" 
-                   type="video/mp4">
+                <source src="image/SadMoment.mp4" type="video/mp4">
             </video>
         </div>
+
         <div id="ans" class="container">
-            <div >
-                <h1 class = "header_text">Jeeeej!!</h1>
-            </div>
+            <p class="subtitle">♪ ♫</p>
+            <h1 class="header_text">Jeeeej!!</h1>
             <div class="gif_container">
-                <img src="image/ans.gif" alt="Slatka animirana ilustracija">
+                <img src="image/ans.gif" alt="Animacija">
             </div>
+
+            <div class="calendar-section">
+                <h2>Kad ti odgovara?</h2>
+                <p>Odaberi datum i sat, pa dodaj u kalendar</p>
+
+                <div class="form-group">
+                    <label for="eventDate">Datum</label>
+                    <input type="date" id="eventDate" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="eventTime">Sat</label>
+                    <input type="time" id="eventTime" required>
+                </div>
+
+                <div class="calendar-actions">
+                    <button class="btn btn-primary" onclick="downloadCalendar()">Dodaj u kalendar</button>
+                    <button class="btn btn-outline btn-primary" onclick="openGoogleCalendar()">Google kalendar</button>
+                </div>
+
+                <div id="confirmation" class="confirmation"></div>
+            </div>
+
             <video id="ansvideo" width="0" height="0" controls>
-                <source src="image/KidsCheering.mp4" 
-                   type="video/mp4">
+                <source src="image/KidsCheering.mp4" type="video/mp4">
             </video>
         </div>
-    </body> 
+    </body>
     <script>
-        function playAudio()
-        {
+        function playAudio() {
             document.getElementById('novideo').play();
         }
 
@@ -72,15 +93,132 @@
             document.getElementById('ask').style.display = 'none';
             document.getElementById('novideo').pause();
             document.getElementById('ansvideo').play();
+            setDefaultDateTime();
         }
 
         function moveButton() {
-            var x = Math.random() * (window.innerWidth - document.getElementById('noButton').offsetWidth);
-            var y = Math.random() * (window.innerHeight - document.getElementById('noButton').offsetHeight);
-            document.getElementById('noButton').style.left = `${x}px`;
-            document.getElementById('noButton').style.top = `${y}px`;
+            var btn = document.getElementById('noButton');
+            var x = Math.random() * (window.innerWidth - btn.offsetWidth - 20);
+            var y = Math.random() * (window.innerHeight - btn.offsetHeight - 20);
+            btn.style.left = Math.max(10, x) + 'px';
+            btn.style.top = Math.max(10, y) + 'px';
             playAudio();
         }
 
-    </script> 
+        function setDefaultDateTime() {
+            var tomorrow = new Date();
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            document.getElementById('eventDate').min = formatDateInput(new Date());
+            document.getElementById('eventDate').value = formatDateInput(tomorrow);
+            document.getElementById('eventTime').value = '19:00';
+        }
+
+        function formatDateInput(date) {
+            var y = date.getFullYear();
+            var m = String(date.getMonth() + 1).padStart(2, '0');
+            var d = String(date.getDate()).padStart(2, '0');
+            return y + '-' + m + '-' + d;
+        }
+
+        function getEventData() {
+            var dateVal = document.getElementById('eventDate').value;
+            var timeVal = document.getElementById('eventTime').value;
+
+            if (!dateVal || !timeVal) {
+                alert('Odaberi datum i sat.');
+                return null;
+            }
+
+            var start = new Date(dateVal + 'T' + timeVal);
+            if (isNaN(start.getTime())) {
+                alert('Neispravan datum ili sat.');
+                return null;
+            }
+
+            var end = new Date(start.getTime() + 2 * 60 * 60 * 1000);
+
+            return {
+                title: 'Piće — Lorena',
+                description: 'Dogovoreno preko Lorena linka ♪',
+                start: start,
+                end: end
+            };
+        }
+
+        function toICSDate(date) {
+            return date.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
+        }
+
+        function formatDisplayDate(date) {
+            return date.toLocaleDateString('sr-RS', {
+                weekday: 'long',
+                day: 'numeric',
+                month: 'long',
+                year: 'numeric'
+            });
+        }
+
+        function formatDisplayTime(date) {
+            return date.toLocaleTimeString('sr-RS', {
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+        }
+
+        function showConfirmation(event) {
+            var el = document.getElementById('confirmation');
+            el.innerHTML =
+                '<strong>Sačuvano!</strong>' +
+                formatDisplayDate(event.start) + '<br>' +
+                'u ' + formatDisplayTime(event.start) + ' sati';
+            el.classList.add('visible');
+        }
+
+        function downloadCalendar() {
+            var event = getEventData();
+            if (!event) return;
+
+            var ics =
+                'BEGIN:VCALENDAR\r\n' +
+                'VERSION:2.0\r\n' +
+                'PRODID:-//Lorena//Piće//SR\r\n' +
+                'CALSCALE:GREGORIAN\r\n' +
+                'BEGIN:VEVENT\r\n' +
+                'UID:lorena-' + Date.now() + '@lorena\r\n' +
+                'DTSTAMP:' + toICSDate(new Date()) + '\r\n' +
+                'DTSTART:' + toICSDate(event.start) + '\r\n' +
+                'DTEND:' + toICSDate(event.end) + '\r\n' +
+                'SUMMARY:' + event.title + '\r\n' +
+                'DESCRIPTION:' + event.description + '\r\n' +
+                'END:VEVENT\r\n' +
+                'END:VCALENDAR';
+
+            var blob = new Blob([ics], { type: 'text/calendar;charset=utf-8' });
+            var link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = 'pice-lorena.ics';
+            link.click();
+            URL.revokeObjectURL(link.href);
+
+            showConfirmation(event);
+        }
+
+        function openGoogleCalendar() {
+            var event = getEventData();
+            if (!event) return;
+
+            function gcalDate(date) {
+                return date.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
+            }
+
+            var url =
+                'https://calendar.google.com/calendar/render?action=TEMPLATE' +
+                '&text=' + encodeURIComponent(event.title) +
+                '&details=' + encodeURIComponent(event.description) +
+                '&dates=' + gcalDate(event.start) + '/' + gcalDate(event.end);
+
+            window.open(url, '_blank');
+            showConfirmation(event);
+        }
+    </script>
 </html>
