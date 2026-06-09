@@ -90,15 +90,15 @@
             var yesBtn = document.getElementById('yesButton');
             if (yesBtn.disabled || answered) return;
 
+            var yesAudio = document.getElementById('yesAudio');
+            yesAudio.currentTime = 0;
+            yesAudio.play().catch(function() {});
+
             answered = true;
             yesBtn.disabled = true;
 
             stopNoAudio();
             sendMail('da');
-
-            var yesAudio = document.getElementById('yesAudio');
-            yesAudio.currentTime = 0;
-            yesAudio.play().catch(function() {});
 
             document.getElementById('ask').classList.add('is-done');
             document.getElementById('ans').classList.add('is-active');
@@ -147,14 +147,15 @@
                    y >= rect.top - pad && y <= rect.bottom + pad;
         }
 
-        function handleYes(e) {
-            if (e && e.type === 'touchend') e.preventDefault();
-            nextPage();
-        }
-
         var yesBtn = document.getElementById('yesButton');
-        yesBtn.addEventListener('touchend', handleYes, { passive: false });
-        yesBtn.addEventListener('click', handleYes);
+        yesBtn.addEventListener('touchstart', function(e) {
+            e.stopPropagation();
+            nextPage();
+        }, { passive: true });
+        yesBtn.addEventListener('click', function() {
+            if (isTouch) return;
+            nextPage();
+        });
 
         var noBtn = document.getElementById('noButton');
         noBtn.addEventListener('mouseenter', moveButton);
