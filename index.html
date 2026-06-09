@@ -27,13 +27,6 @@
                 <button class="btn" id="noButton" type="button">NE</button>
             </div>
         </div>
-
-        <div id="ans" class="screen">
-            <h1 class="header_text success_text">Vidimo se sjutra u 20:30!</h1>
-            <div class="gif_container">
-                <img src="image/ans.gif" alt="Slatka animirana ilustracija">
-            </div>
-        </div>
     </body>
     <script>
         var NOTIFY_EMAIL = 'vasilijetomic02@gmail.com';
@@ -99,9 +92,8 @@
 
             stopNoAudio();
             sendMail('da');
-
-            document.getElementById('ask').classList.add('is-done');
-            document.getElementById('ans').classList.add('is-active');
+            sessionStorage.setItem('lorena_yes', '1');
+            window.location.href = 'yes.html';
         }
 
         window.addEventListener('pagehide', stopNoAudio);
