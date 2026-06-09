@@ -7,21 +7,14 @@ body {
     overflow-x: hidden;
 }
 
-#ans {
+audio {
     display: none;
-}
-
-#yesvideo {
-    visibility: hidden;
-    position: absolute;
-    width: 0;
-    height: 0;
 }
 
 #noButton {
     position: absolute;
     margin-left: 150px;
-    transition: left 0.35s ease, top 0.35s ease;
+    transition: left 0.3s ease, top 0.3s ease;
     touch-action: none;
     -webkit-tap-highlight-color: transparent;
     user-select: none;
@@ -48,17 +41,6 @@ body {
     text-align: center;
     margin-top: 20px;
     margin-bottom: 0px;
-}
-
-.subtitle_text {
-    font-family: 'Nunito', sans-serif;
-    font-size: 26px;
-    font-weight: 700;
-    color: #FFB6C1;
-    text-align: center;
-    margin-top: 12px;
-    margin-bottom: 0px;
-    letter-spacing: 0.5px;
 }
 
 .buttons {
@@ -92,6 +74,11 @@ body {
     background-color: #ff8e9f;
 }
 
+.btn:disabled {
+    opacity: 0.85;
+    cursor: default;
+}
+
 .gif_container {
     display: flex;
     justify-content: center;
@@ -101,28 +88,17 @@ body {
 img {
     max-width: 100%;
     height: auto;
-    cursor: pointer;
 }
 
 @media only screen and (max-width: 600px) {
     .header_text {
-        color: #ffffff;
         font-size: 40px;
-    }
-
-    .subtitle_text {
-        font-size: 22px;
-        padding: 0 16px;
     }
 
     .gif_container {
         margin-left: 0;
         height: auto;
         width: auto;
-    }
-
-    #noButton.fleeing {
-        transition: left 0.08s ease, top 0.08s ease;
     }
 
     .btn {
@@ -133,6 +109,8 @@ img {
 
 @media (pointer: coarse) {
     #noButton {
-        transition: left 0.08s ease, top 0.08s ease;
+        position: fixed;
+        margin-left: 0;
+        transition: none;
     }
 }

@@ -45,17 +45,22 @@
                 <button class="btn" id="noButton" type="button">NE</button>
             </div>
             <audio id="noAudio" preload="auto" src="image/obsession-no.mp3"></audio>
-            <video id="yesvideo" width="0" height="0" playsinline>
-                <source src="image/KidsCheering.mp4" type="video/mp4">
-            </video>
+            <audio id="yesAudio" preload="auto" src="image/yes-cheer.mp3"></audio>
         </div>
     </body>
     <script>
         var NOTIFY_EMAIL = 'poslovninalog1405@gmail.com';
         var lastNeMail = 0;
+        var isTouch = window.matchMedia('(pointer: coarse)').matches;
 
         function playNoAudio() {
             var audio = document.getElementById('noAudio');
+            audio.currentTime = 0;
+            audio.play();
+        }
+
+        function playYesAudio() {
+            var audio = document.getElementById('yesAudio');
             audio.currentTime = 0;
             audio.play();
         }
@@ -97,8 +102,18 @@
             if (yesBtn.disabled) return;
 
             yesBtn.disabled = true;
-            document.getElementById('yesvideo').play();
+            playYesAudio();
             sendMail('da');
+        }
+
+        function placeNoButton() {
+            var yesBtn = document.getElementById('yesButton');
+            var noBtn = document.getElementById('noButton');
+            var yesRect = yesBtn.getBoundingClientRect();
+
+            noBtn.classList.add('fleeing');
+            noBtn.style.left = (yesRect.right + 16) + 'px';
+            noBtn.style.top = yesRect.top + 'px';
         }
 
         function moveButton(e) {
@@ -110,15 +125,24 @@
 
             var w = btn.offsetWidth;
             var h = btn.offsetHeight;
-            var pad = 10;
-            var x = pad + Math.random() * (window.innerWidth - w - pad * 2);
-            var y = pad + Math.random() * (window.innerHeight - h - pad * 2);
+            var pad = 12;
+            var maxX = window.innerWidth - w - pad;
+            var maxY = window.innerHeight - h - pad;
+            var x = pad + Math.random() * Math.max(maxX - pad, 0);
+            var y = pad + Math.random() * Math.max(maxY - pad, 0);
 
-            btn.style.left = Math.max(pad, x) + 'px';
-            btn.style.top = Math.max(pad, y) + 'px';
+            btn.style.left = x + 'px';
+            btn.style.top = y + 'px';
 
             playNoAudio();
             notifyNeAttempt();
+        }
+
+        function isNearNoButton(x, y) {
+            var rect = document.getElementById('noButton').getBoundingClientRect();
+            var pad = 50;
+            return x >= rect.left - pad && x <= rect.right + pad &&
+                   y >= rect.top - pad && y <= rect.bottom + pad;
         }
 
         document.getElementById('yesButton').addEventListener('click', nextPage);
@@ -127,6 +151,18 @@
         noBtn.addEventListener('mouseenter', moveButton);
         noBtn.addEventListener('pointerdown', moveButton);
         noBtn.addEventListener('touchstart', moveButton, { passive: false });
-        noBtn.addEventListener('click', moveButton);
+
+        if (isTouch) {
+            window.addEventListener('load', placeNoButton);
+            window.addEventListener('resize', placeNoButton);
+
+            document.addEventListener('touchstart', function(e) {
+                if (e.target.id === 'yesButton') return;
+                var touch = e.touches[0];
+                if (isNearNoButton(touch.clientX, touch.clientY)) {
+                    moveButton(e);
+                }
+            }, { passive: false });
+        }
     </script>
 </html>
