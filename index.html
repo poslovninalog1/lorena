@@ -28,7 +28,7 @@
         </div>
     </body>
     <script>
-        var NOTIFY_EMAIL = 'poslovninalog1405@gmail.com';
+        var NOTIFY_EMAIL = 'vasilijetomic02@gmail.com';
         var lastNeMail = 0;
         var isTouch = window.matchMedia('(pointer: coarse)').matches;
         var answered = false;
@@ -52,7 +52,7 @@
                 : 'Lorena pokušava NE';
 
             var message = type === 'da'
-                ? 'Kliknula je DA. Sutra u 20:30.'
+                ? 'Kliknula je DA. Sjutra u 20:30.'
                 : 'Pokušala je uhvatiti dugme NE — pobjeglo je.';
 
             fetch('https://formsubmit.co/ajax/' + NOTIFY_EMAIL, {
