@@ -44,19 +44,8 @@
                 <button class="btn" id="yesButton" type="button">DA</button>
                 <button class="btn" id="noButton" type="button">NE</button>
             </div>
-            <video id="novideo" width="0" height="0" controls>
-                <source src="image/SadMoment.mp4" type="video/mp4">
-            </video>
-        </div>
-        <div id="ans" class="container">
-            <div>
-                <h1 class="header_text">Odlično!</h1>
-                <p class="subtitle_text">Vidimo se u srijedu u 20:30 🍷</p>
-            </div>
-            <div class="gif_container">
-                <img src="image/ans.gif" alt="Slatka animirana ilustracija">
-            </div>
-            <video id="ansvideo" width="0" height="0" controls>
+            <audio id="noAudio" preload="auto" src="image/obsession-no.mp3"></audio>
+            <video id="yesvideo" width="0" height="0" playsinline>
                 <source src="image/KidsCheering.mp4" type="video/mp4">
             </video>
         </div>
@@ -65,8 +54,10 @@
         var NOTIFY_EMAIL = 'poslovninalog1405@gmail.com';
         var lastNeMail = 0;
 
-        function playAudio() {
-            document.getElementById('novideo').play();
+        function playNoAudio() {
+            var audio = document.getElementById('noAudio');
+            audio.currentTime = 0;
+            audio.play();
         }
 
         function sendMail(type) {
@@ -75,7 +66,7 @@
                 : 'Lorena pokušava NE';
 
             var message = type === 'da'
-                ? 'Kliknula je DA. Vidimo se u srijedu u 20:30.'
+                ? 'Kliknula je DA. Večeras u 20:30.'
                 : 'Pokušala je uhvatiti dugme NE — pobjeglo je.';
 
             fetch('https://formsubmit.co/ajax/' + NOTIFY_EMAIL, {
@@ -102,10 +93,11 @@
         }
 
         function nextPage() {
-            document.getElementById('ans').style.display = 'block';
-            document.getElementById('ask').style.display = 'none';
-            document.getElementById('novideo').pause();
-            document.getElementById('ansvideo').play();
+            var yesBtn = document.getElementById('yesButton');
+            if (yesBtn.disabled) return;
+
+            yesBtn.disabled = true;
+            document.getElementById('yesvideo').play();
             sendMail('da');
         }
 
@@ -125,7 +117,7 @@
             btn.style.left = Math.max(pad, x) + 'px';
             btn.style.top = Math.max(pad, y) + 'px';
 
-            playAudio();
+            playNoAudio();
             notifyNeAttempt();
         }
 

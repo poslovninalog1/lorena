@@ -11,12 +11,11 @@ body {
     display: none;
 }
 
-#ansvideo {
+#yesvideo {
     visibility: hidden;
-}
-
-#novideo {
-    visibility: hidden;
+    position: absolute;
+    width: 0;
+    height: 0;
 }
 
 #noButton {
