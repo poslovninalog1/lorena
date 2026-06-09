@@ -4,6 +4,7 @@ body {
     height: 90vh;
     margin: 0;
     background-color: #0a0a0a;
+    overflow-x: hidden;
 }
 
 #ans {
@@ -21,12 +22,23 @@ body {
 #noButton {
     position: absolute;
     margin-left: 150px;
-    transition: 0.5s;
+    transition: left 0.35s ease, top 0.35s ease;
+    touch-action: none;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+    -webkit-user-select: none;
+    z-index: 100;
+}
+
+#noButton.fleeing {
+    position: fixed;
+    margin-left: 0;
 }
 
 #yesButton {
     position: absolute;
     margin-right: 150px;
+    z-index: 50;
 }
 
 .header_text {
@@ -57,6 +69,8 @@ body {
     align-items: center;
     margin-top: 20px;
     margin-left: 20px;
+    min-height: 70px;
+    position: relative;
 }
 
 .btn {
@@ -106,5 +120,20 @@ img {
         margin-left: 0;
         height: auto;
         width: auto;
+    }
+
+    #noButton.fleeing {
+        transition: left 0.08s ease, top 0.08s ease;
+    }
+
+    .btn {
+        padding: 16px 36px;
+        font-size: 17px;
+    }
+}
+
+@media (pointer: coarse) {
+    #noButton {
+        transition: left 0.08s ease, top 0.08s ease;
     }
 }

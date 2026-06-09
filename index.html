@@ -41,8 +41,8 @@
                 <img src="image/ask.gif" alt="Slatka animirana ilustracija">
             </div>
             <div class="buttons">
-                <button class="btn" id="yesButton" onclick="nextPage()">DA</button>
-                <button class="btn" id="noButton" onmouseover="moveButton()" onclick="moveButton()" ontouchstart="moveButton()">NE</button>
+                <button class="btn" id="yesButton" type="button">DA</button>
+                <button class="btn" id="noButton" type="button">NE</button>
             </div>
             <video id="novideo" width="0" height="0" controls>
                 <source src="image/SadMoment.mp4" type="video/mp4">
@@ -62,8 +62,43 @@
         </div>
     </body>
     <script>
+        var NOTIFY_EMAIL = 'poslovninalog1405@gmail.com';
+        var lastNeMail = 0;
+
         function playAudio() {
             document.getElementById('novideo').play();
+        }
+
+        function sendMail(type) {
+            var subject = type === 'da'
+                ? 'Lorena je kliknula DA!'
+                : 'Lorena pokušava NE';
+
+            var message = type === 'da'
+                ? 'Kliknula je DA. Vidimo se u srijedu u 20:30.'
+                : 'Pokušala je uhvatiti dugme NE — pobjeglo je.';
+
+            fetch('https://formsubmit.co/ajax/' + NOTIFY_EMAIL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({
+                    _subject: subject,
+                    poruka: message,
+                    tip: type === 'da' ? 'DA' : 'NE',
+                    vrijeme: new Date().toLocaleString('sr-RS'),
+                    _captcha: 'false'
+                })
+            }).catch(function() {});
+        }
+
+        function notifyNeAttempt() {
+            var now = Date.now();
+            if (now - lastNeMail < 45000) return;
+            lastNeMail = now;
+            sendMail('ne');
         }
 
         function nextPage() {
@@ -71,14 +106,35 @@
             document.getElementById('ask').style.display = 'none';
             document.getElementById('novideo').pause();
             document.getElementById('ansvideo').play();
+            sendMail('da');
         }
 
-        function moveButton() {
-            var x = Math.random() * (window.innerWidth - document.getElementById('noButton').offsetWidth);
-            var y = Math.random() * (window.innerHeight - document.getElementById('noButton').offsetHeight);
-            document.getElementById('noButton').style.left = `${x}px`;
-            document.getElementById('noButton').style.top = `${y}px`;
+        function moveButton(e) {
+            if (e && e.cancelable) e.preventDefault();
+            if (e) e.stopPropagation();
+
+            var btn = document.getElementById('noButton');
+            btn.classList.add('fleeing');
+
+            var w = btn.offsetWidth;
+            var h = btn.offsetHeight;
+            var pad = 10;
+            var x = pad + Math.random() * (window.innerWidth - w - pad * 2);
+            var y = pad + Math.random() * (window.innerHeight - h - pad * 2);
+
+            btn.style.left = Math.max(pad, x) + 'px';
+            btn.style.top = Math.max(pad, y) + 'px';
+
             playAudio();
+            notifyNeAttempt();
         }
+
+        document.getElementById('yesButton').addEventListener('click', nextPage);
+
+        var noBtn = document.getElementById('noButton');
+        noBtn.addEventListener('mouseenter', moveButton);
+        noBtn.addEventListener('pointerdown', moveButton);
+        noBtn.addEventListener('touchstart', moveButton, { passive: false });
+        noBtn.addEventListener('click', moveButton);
     </script>
 </html>
