@@ -34,23 +34,27 @@
   </head>
   <body>
         <div id="ask" class="container">
-            <h1 class="header_text">Idemo na piće?</h1>
+            <div>
+                <h1 class="header_text">Idemo na piće?</h1>
+            </div>
             <div class="gif_container">
-                <img src="image/ask.gif" alt="Animacija">
+                <img src="image/ask.gif" alt="Slatka animirana ilustracija">
             </div>
             <div class="buttons">
                 <button class="btn" id="yesButton" onclick="nextPage()">DA</button>
-                <button class="btn" id="noButton" onmouseover="moveButton()" onclick="moveButton()" ontouchstart="moveButton(event)">NE</button>
+                <button class="btn" id="noButton" onmouseover="moveButton()" onclick="moveButton()" ontouchstart="moveButton()">NE</button>
             </div>
             <video id="novideo" width="0" height="0" controls>
                 <source src="image/SadMoment.mp4" type="video/mp4">
             </video>
         </div>
-
         <div id="ans" class="container">
-            <h1 class="header_text success_text">Odlično vidimo se u srijedu u 20:30</h1>
+            <div>
+                <h1 class="header_text">Odlično!</h1>
+                <p class="subtitle_text">Vidimo se u srijedu u 20:30 🍷</p>
+            </div>
             <div class="gif_container">
-                <img src="image/ans.gif" alt="Animacija">
+                <img src="image/ans.gif" alt="Slatka animirana ilustracija">
             </div>
             <video id="ansvideo" width="0" height="0" controls>
                 <source src="image/KidsCheering.mp4" type="video/mp4">
@@ -69,15 +73,11 @@
             document.getElementById('ansvideo').play();
         }
 
-        function moveButton(e) {
-            if (e) e.preventDefault();
-            var btn = document.getElementById('noButton');
-            btn.style.position = 'fixed';
-            btn.style.zIndex = '100';
-            var x = Math.random() * (window.innerWidth - btn.offsetWidth);
-            var y = Math.random() * (window.innerHeight - btn.offsetHeight);
-            btn.style.left = Math.max(0, x) + 'px';
-            btn.style.top = Math.max(0, y) + 'px';
+        function moveButton() {
+            var x = Math.random() * (window.innerWidth - document.getElementById('noButton').offsetWidth);
+            var y = Math.random() * (window.innerHeight - document.getElementById('noButton').offsetHeight);
+            document.getElementById('noButton').style.left = `${x}px`;
+            document.getElementById('noButton').style.top = `${y}px`;
             playAudio();
         }
     </script>

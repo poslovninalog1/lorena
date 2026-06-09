@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@700;800&display=swap');
+
 body {
     height: 90vh;
     margin: 0;
@@ -8,7 +10,10 @@ body {
     display: none;
 }
 
-#ansvideo,
+#ansvideo {
+    visibility: hidden;
+}
+
 #novideo {
     visibility: hidden;
 }
@@ -27,17 +32,22 @@ body {
 .header_text {
     font-family: 'Nunito', sans-serif;
     font-size: 50px;
-    font-weight: bold;
+    font-weight: 800;
     color: #ffffff;
     text-align: center;
     margin-top: 20px;
     margin-bottom: 0px;
 }
 
-.success_text {
-    font-size: clamp(28px, 5vw, 44px);
-    line-height: 1.25;
-    padding: 0 16px;
+.subtitle_text {
+    font-family: 'Nunito', sans-serif;
+    font-size: 26px;
+    font-weight: 700;
+    color: #FFB6C1;
+    text-align: center;
+    margin-top: 12px;
+    margin-bottom: 0px;
+    letter-spacing: 0.5px;
 }
 
 .buttons {
@@ -47,18 +57,17 @@ body {
     align-items: center;
     margin-top: 20px;
     margin-left: 20px;
-    min-height: 60px;
-    position: relative;
 }
 
 .btn {
-    background-color: #ffffff;
-    color: #0a0a0a;
+    background-color: #FFB6C1;
+    color: white;
     padding: 15px 32px;
     text-align: center;
     display: inline-block;
     font-size: 16px;
-    font-weight: bold;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
     margin: 4px 2px;
     cursor: pointer;
     border: none;
@@ -67,7 +76,7 @@ body {
 }
 
 .btn:hover {
-    background-color: #e0e0e0;
+    background-color: #ff8e9f;
 }
 
 .gif_container {
@@ -79,11 +88,18 @@ body {
 img {
     max-width: 100%;
     height: auto;
+    cursor: pointer;
 }
 
 @media only screen and (max-width: 600px) {
     .header_text {
-        font-size: 36px;
+        color: #ffffff;
+        font-size: 40px;
+    }
+
+    .subtitle_text {
+        font-size: 22px;
+        padding: 0 16px;
     }
 
     .gif_container {
