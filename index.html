@@ -27,6 +27,13 @@
                 <button class="btn" id="noButton" type="button">NE</button>
             </div>
         </div>
+
+        <div id="ans" class="screen">
+            <h1 class="header_text success_text">Vidimo se sjutra u 20:30!</h1>
+            <div class="gif_container">
+                <img src="image/ans.gif" alt="Slatka animirana ilustracija">
+            </div>
+        </div>
     </body>
     <script>
         var NOTIFY_EMAIL = 'vasilijetomic02@gmail.com';
@@ -88,13 +95,13 @@
 
             stopNoAudio();
             sendMail('da');
-            sessionStorage.setItem('lorena_yes', '1');
 
             var yesAudio = document.getElementById('yesAudio');
             yesAudio.currentTime = 0;
             yesAudio.play().catch(function() {});
 
-            window.location.replace('yes.html');
+            document.getElementById('ask').classList.add('is-done');
+            document.getElementById('ans').classList.add('is-active');
         }
 
         window.addEventListener('pagehide', stopNoAudio);
@@ -140,7 +147,14 @@
                    y >= rect.top - pad && y <= rect.bottom + pad;
         }
 
-        document.getElementById('yesButton').addEventListener('click', nextPage);
+        function handleYes(e) {
+            if (e && e.type === 'touchend') e.preventDefault();
+            nextPage();
+        }
+
+        var yesBtn = document.getElementById('yesButton');
+        yesBtn.addEventListener('touchend', handleYes, { passive: false });
+        yesBtn.addEventListener('click', handleYes);
 
         var noBtn = document.getElementById('noButton');
         noBtn.addEventListener('mouseenter', moveButton);

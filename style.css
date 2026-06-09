@@ -32,6 +32,24 @@ audio {
     overflow: hidden;
 }
 
+#ans {
+    display: none !important;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+#ans.is-active {
+    display: flex !important;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+#ask.is-done {
+    display: none !important;
+    visibility: hidden;
+    pointer-events: none;
+}
+
 .header_text {
     font-family: 'Nunito', sans-serif;
     font-size: clamp(32px, 8vw, 50px);
