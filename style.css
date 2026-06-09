@@ -1,25 +1,84 @@
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@700;800&display=swap');
 
-body {
-    height: 90vh;
+* {
+    box-sizing: border-box;
+}
+
+html, body {
     margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
     background-color: #0a0a0a;
-    overflow-x: hidden;
 }
 
 audio {
     display: none;
 }
 
-#ans {
-    display: none;
+.screen {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    background-color: #0a0a0a;
+    overflow: hidden;
+}
+
+.screen.hidden {
+    display: none !important;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.header_text {
+    font-family: 'Nunito', sans-serif;
+    font-size: clamp(32px, 8vw, 50px);
+    font-weight: 800;
+    color: #ffffff;
+    text-align: center;
+    margin: 0 0 16px;
+    line-height: 1.15;
 }
 
 .success_text {
-    font-size: clamp(32px, 6vw, 50px);
-    line-height: 1.2;
-    padding: 0 20px;
     color: #FFB6C1;
+    margin-bottom: 20px;
+}
+
+.gif_container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 320px;
+    width: 100%;
+    margin: 8px 0;
+}
+
+.gif_container img {
+    max-width: 100%;
+    max-height: 40vh;
+    height: auto;
+    width: auto;
+    object-fit: contain;
+}
+
+.buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 16px;
+    min-height: 60px;
+    width: 100%;
+    max-width: 360px;
+    position: relative;
 }
 
 #noButton {
@@ -42,27 +101,6 @@ audio {
     position: absolute;
     margin-right: 150px;
     z-index: 50;
-}
-
-.header_text {
-    font-family: 'Nunito', sans-serif;
-    font-size: 50px;
-    font-weight: 800;
-    color: #ffffff;
-    text-align: center;
-    margin-top: 20px;
-    margin-bottom: 0px;
-}
-
-.buttons {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    margin-top: 20px;
-    margin-left: 20px;
-    min-height: 70px;
-    position: relative;
 }
 
 .btn {
@@ -90,26 +128,11 @@ audio {
     cursor: default;
 }
 
-.gif_container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-img {
-    max-width: 100%;
-    height: auto;
-}
-
-@media only screen and (max-width: 600px) {
-    .header_text {
-        font-size: 40px;
-    }
-
-    .gif_container {
+@media (pointer: coarse) {
+    #noButton {
+        position: fixed;
         margin-left: 0;
-        height: auto;
-        width: auto;
+        transition: none;
     }
 
     .btn {
@@ -118,10 +141,16 @@ img {
     }
 }
 
-@media (pointer: coarse) {
-    #noButton {
-        position: fixed;
-        margin-left: 0;
-        transition: none;
+@media only screen and (max-width: 600px) {
+    .screen {
+        padding: 16px;
+    }
+
+    .gif_container {
+        max-width: 260px;
+    }
+
+    .gif_container img {
+        max-height: 35vh;
     }
 }

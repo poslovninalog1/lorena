@@ -33,10 +33,11 @@
     <link rel="manifest" href="image/icons/manifest.json">
   </head>
   <body>
-        <div id="ask" class="container">
-            <div>
-                <h1 class="header_text">Idemo na piće?</h1>
-            </div>
+        <audio id="noAudio" preload="auto" src="image/obsession-no.mp3"></audio>
+        <audio id="yesAudio" preload="auto" src="image/yes-cheer.mp3"></audio>
+
+        <div id="ask" class="screen">
+            <h1 class="header_text">Idemo na piće?</h1>
             <div class="gif_container">
                 <img src="image/ask.gif" alt="Slatka animirana ilustracija">
             </div>
@@ -44,11 +45,9 @@
                 <button class="btn" id="yesButton" type="button">DA</button>
                 <button class="btn" id="noButton" type="button">NE</button>
             </div>
-            <audio id="noAudio" preload="auto" src="image/obsession-no.mp3"></audio>
-            <audio id="yesAudio" preload="auto" src="image/yes-cheer.mp3"></audio>
         </div>
 
-        <div id="ans" class="container">
+        <div id="ans" class="screen hidden" hidden aria-hidden="true">
             <h1 class="header_text success_text">Vidimo se večeras u 20:30!</h1>
             <div class="gif_container">
                 <img src="image/ans.gif" alt="Slatka animirana ilustracija">
@@ -112,8 +111,14 @@
             playYesAudio();
             sendMail('da');
 
-            document.getElementById('ask').style.display = 'none';
-            document.getElementById('ans').style.display = 'block';
+            var ask = document.getElementById('ask');
+            var ans = document.getElementById('ans');
+            ask.classList.add('hidden');
+            ask.setAttribute('aria-hidden', 'true');
+            ans.classList.remove('hidden');
+            ans.removeAttribute('hidden');
+            ans.setAttribute('aria-hidden', 'false');
+            window.scrollTo(0, 0);
         }
 
         function placeNoButton() {
