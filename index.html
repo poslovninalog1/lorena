@@ -1,14 +1,16 @@
 <!DOCTYPE html>
-<html lang="en-IN" dir="ltr">
+<html lang="sr" dir="ltr">
   <head>
-    <title>Do you wanna go out with me?</title>
+    <title>Lorena</title>
     <meta charset="utf-8">
-    <meta name="author" content="SidPro"/>
     <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-    <meta name="description" content="Do you wanna go out with me? A website to invite your lover for a date by Collegeek online learning platform."/>
-    <meta name="keywords" content="Do you wanna go out with me,A website to invite your lover for a date,Collegeek,Collegeek.com,learning programing,programming tutorial,tools,Live_DHTML,Convertor,microprocessor"/>
+    <meta name="description" content="Idemo na piće?"/>
+    <meta name="keywords" content="Lorena,idemo na piće,poziv na piće"/>
+    <meta property="og:title" content="Lorena"/>
+    <meta property="og:description" content="Idemo na piće?"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:url" content="https://sidpro-hash.github.io/lorena/"/>
     <link rel="stylesheet" href="./style.css">
-    <!-- icons -->
     <link rel="apple-touch-icon" sizes="57x57" href="image/icons/favicon-57x57.png">
     <link rel="apple-touch-icon" sizes="60x60" href="image/icons/favicon-60x60.png">
     <link rel="apple-touch-icon" sizes="72x72" href="image/icons/favicon-72x72.png">
@@ -28,28 +30,18 @@
     <meta name="msapplication-TileImage" content="image/icons/favicon-144x144.png">
     <meta name="msapplication-config" content="image/icons/browserconfig.xml">
     <link rel="manifest" href="image/icons/manifest.json">
-    <!-- icons -->
-	<!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3EWCZHDCG9"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-
-      gtag('config', 'G-3EWCZHDCG9');
-    </script>
   </head>
   <body>
         <div id="ask" class="container">
             <div >
-                <h1 class = "header_text">Do you wanna go out with me?</h1>
+                <h1 class = "header_text">Idemo na piće?</h1>
             </div>
             <div class="gif_container">
-                <img src="image/ask.gif" alt="Cute animated illustration">
+                <img src="image/ask.gif" alt="Slatka animirana ilustracija">
             </div>
             <div class = "buttons">
-                <button class="btn" id = "yesButton" onclick="nextPage()">Yes</button>
-                <button class="btn" id="noButton" onmouseover="moveButton()" onclick="moveButton()">No</button>
+                <button class="btn" id = "yesButton" onclick="nextPage()">DA</button>
+                <button class="btn" id="noButton" onmouseover="moveButton()" onclick="moveButton()">NE</button>
             </div>
             <video id="novideo" width="0" height="0" controls>
                 <source src="image/SadMoment.mp4" 
@@ -58,13 +50,10 @@
         </div>
         <div id="ans" class="container">
             <div >
-                <h1 class = "header_text">Yeeeyyyy!!</h1>
+                <h1 class = "header_text">Jeeeej!!</h1>
             </div>
             <div class="gif_container">
-                <img src="image/ans.gif" alt="Cute animated illustration">
-            </div>
-            <div class="gif_container qrimage">
-                <img src="image/siddharth_gabu_qr.png" onclick="window.open('https://www.instagram.com/siddharth_gabu/')" alt="Insta Profile QR code">
+                <img src="image/ans.gif" alt="Slatka animirana ilustracija">
             </div>
             <video id="ansvideo" width="0" height="0" controls>
                 <source src="image/KidsCheering.mp4" 
@@ -73,23 +62,12 @@
         </div>
     </body> 
     <script>
-
-        var debounce = function(fn, t = 1000) {
-            let timer;
-            return function(...args) {
-                clearTimeout(timer);
-                timer = setTimeout(() => fn(...args), t);
-            }
-        };
-
-
         function playAudio()
         {
             document.getElementById('novideo').play();
         }
 
         function nextPage() {
-            //window.location.href = "yes.html";
             document.getElementById('ans').style.display = 'block';
             document.getElementById('ask').style.display = 'none';
             document.getElementById('novideo').pause();
