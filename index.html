@@ -10,7 +10,7 @@
     <meta property="og:description" content="Idemo na piće?"/>
     <meta property="og:type" content="website"/>
     <meta property="og:url" content="https://poslovninalog1.github.io/lorena/"/>
-    <meta name="theme-color" content="#1a1614">
+    <meta name="theme-color" content="#0a0a0a">
     <link rel="stylesheet" href="./style.css">
     <link rel="apple-touch-icon" sizes="57x57" href="image/icons/favicon-57x57.png">
     <link rel="apple-touch-icon" sizes="60x60" href="image/icons/favicon-60x60.png">
@@ -27,7 +27,7 @@
     <link rel="icon" type="image/png" sizes="192x192" href="image/icons/favicon-192x192.png">
     <link rel="shortcut icon" type="image/x-icon" href="image/icons/favicon.ico">
     <link rel="icon" type="image/x-icon" href="image/icons/favicon.ico">
-    <meta name="msapplication-TileColor" content="#1a1614">
+    <meta name="msapplication-TileColor" content="#0a0a0a">
     <meta name="msapplication-TileImage" content="image/icons/favicon-144x144.png">
     <meta name="msapplication-config" content="image/icons/browserconfig.xml">
     <link rel="manifest" href="image/icons/manifest.json">
@@ -35,10 +35,12 @@
   <body>
         <div id="ask" class="container">
             <h1 class="header_text">Idemo na piće?</h1>
-            <div class="line"></div>
+            <div class="gif_container">
+                <img src="image/ask.gif" alt="Animacija">
+            </div>
             <div class="buttons">
                 <button class="btn" id="yesButton" onclick="nextPage()">DA</button>
-                <button class="btn btn-outline" id="noButton" onmouseover="moveButton()" onclick="moveButton()" ontouchstart="moveButton(event)">NE</button>
+                <button class="btn" id="noButton" onmouseover="moveButton()" onclick="moveButton()" ontouchstart="moveButton(event)">NE</button>
             </div>
             <video id="novideo" width="0" height="0" controls>
                 <source src="image/SadMoment.mp4" type="video/mp4">
@@ -47,6 +49,9 @@
 
         <div id="ans" class="container">
             <h1 class="header_text success_text">Odlično vidimo se u srijedu u 20:30</h1>
+            <div class="gif_container">
+                <img src="image/ans.gif" alt="Animacija">
+            </div>
             <video id="ansvideo" width="0" height="0" controls>
                 <source src="image/KidsCheering.mp4" type="video/mp4">
             </video>
@@ -58,7 +63,7 @@
         }
 
         function nextPage() {
-            document.getElementById('ans').style.display = 'flex';
+            document.getElementById('ans').style.display = 'block';
             document.getElementById('ask').style.display = 'none';
             document.getElementById('novideo').pause();
             document.getElementById('ansvideo').play();
@@ -69,10 +74,10 @@
             var btn = document.getElementById('noButton');
             btn.style.position = 'fixed';
             btn.style.zIndex = '100';
-            var x = Math.random() * (window.innerWidth - btn.offsetWidth - 20);
-            var y = Math.random() * (window.innerHeight - btn.offsetHeight - 20);
-            btn.style.left = Math.max(10, x) + 'px';
-            btn.style.top = Math.max(10, y) + 'px';
+            var x = Math.random() * (window.innerWidth - btn.offsetWidth);
+            var y = Math.random() * (window.innerHeight - btn.offsetHeight);
+            btn.style.left = Math.max(0, x) + 'px';
+            btn.style.top = Math.max(0, y) + 'px';
             playAudio();
         }
     </script>
