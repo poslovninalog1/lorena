@@ -22,6 +22,7 @@
         if (sessionStorage.getItem('lorena_yes') !== '1') {
             window.location.replace('index.html');
         } else {
+            sessionStorage.removeItem('lorena_yes');
             var audio = document.getElementById('yesAudio');
             audio.play().catch(function() {});
         }

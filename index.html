@@ -42,8 +42,8 @@
         function playNoAudio() {
             if (answered) return;
             var audio = document.getElementById('noAudio');
-            if (!audio.paused) return;
-            audio.play();
+            audio.currentTime = 0;
+            audio.play().catch(function() {});
         }
 
         function sendMail(type) {
@@ -88,8 +88,10 @@
             stopNoAudio();
             sendMail('da');
             sessionStorage.setItem('lorena_yes', '1');
-            window.location.href = 'yes.html';
+            window.location.replace('yes.html');
         }
+
+        window.addEventListener('pagehide', stopNoAudio);
 
         function placeNoButton() {
             if (answered) return;
